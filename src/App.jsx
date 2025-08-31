@@ -101,26 +101,27 @@ function App() {
 	return (
 		<div>
 			<form onSubmit={handleSearch}>
-				<h1 style={{color:"darkseagreen"}}>Grab ur matcha!</h1>
-				<input type="text" onChange={(event) => setSearch(event.target.value)}/>
-				<button type='submit'>Search</button>
+				<h1 style={{}}>Grab ur matcha!</h1>
+				<input style={{backgroundColor:"rgb(255,255,255, 0.87)", borderRadius:"0.5em", padding:"0.2em 1.2em"}} type="text" 
+				onChange={(event) => setSearch(event.target.value)}/>
+				<button type='submit' style={{padding:"0.2em 0.8em", marginLeft:"1em", border:"1px solid white"}}>Search</button>
 			</form>
 			<h3>Click your checkout link</h3>
 			<div style={{display:"flex", justifyContent:"center"}}>
-				<div style={{border:"solid 1px grey", borderRadius:"5px", paddingLeft:"15px", paddingRight:"15px", backgroundColor:"dimgrey",width:"fit-content"}}>
+				<div style={{border:"solid 1px grey", borderRadius:"5px", paddingLeft:"15px", paddingRight:"15px", backgroundColor:"dimgrey",maxWidth:"450px", overflow:"scroll"}}>
 
 					<a href={`https://horiishichimeien.com/en/cart/${txt}`} style={{color:"white"}}>
 						{`https://horiishichimeien.com/en/cart/${txt}`}
 					</a>
 				</div>
-				<button onClick={() =>  navigator.clipboard.writeText(`https://horiishichimeien.com/en/cart/${txt}`)}
+				<button onClick={() => {navigator.clipboard.writeText(`https://horiishichimeien.com/en/cart/${txt}`)}}
 				style={{padding:"0.2em 0.8em", marginLeft:"1em", border:"1px solid white"}}>Copy for later</button>
 			</div>
 			<ul style={{padding:0, display:"flex", flexWrap:"wrap", flexDirection:"row", listStyle:"none"}}>
 				{results.map((result) => {
 					return (
 						<li style={{maxWidth: "20em", minHeight: "20em", margin:0, padding:0, alignItems:"stretch"}}>
-							<a href={`https://horiishichimeien.com/products/${result.handle}`}>
+							<a href={`https://horiishichimeien.com/products/${result.handle}`} style={{color:"black", textDecoration:"underline"}}>
 								<h3>{result.title}</h3>
 							</a>
 							<p>Variant ID: {result.variant_id} 
@@ -128,7 +129,7 @@ function App() {
 								style={{backgroundColor:"dimgray", padding:"0.3em 0.6em", marginTop:"0.2em", marginLeft:"0.5em"}}>+</button>
 								<br/>
 								Price: {result.price} yen</p>
-							<img src={result.image} alt={result.title} width='50%' height='50%'/>
+							<img src={result.image} alt={result.title} width='50%' height='50%' style={{borderRadius:"2.2em"}}/>
 						</li>
 					)
 				}) }
