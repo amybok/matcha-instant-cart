@@ -113,6 +113,8 @@ function App() {
 						{`https://horiishichimeien.com/en/cart/${txt}`}
 					</a>
 				</div>
+				<button onClick={() =>  navigator.clipboard.writeText(`https://horiishichimeien.com/en/cart/${txt}`)}
+				style={{padding:"0.2em 0.8em", marginLeft:"1em", border:"1px solid white"}}>Copy for later</button>
 			</div>
 			<ul style={{padding:0, display:"flex", flexWrap:"wrap", flexDirection:"row", listStyle:"none"}}>
 				{results.map((result) => {
