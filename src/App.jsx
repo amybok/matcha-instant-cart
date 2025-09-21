@@ -163,6 +163,19 @@ function App() {
                 >
                     Copy for later
                 </button>
+                {/* <button
+                    onClick={() => {
+                        setCart([])
+                    }}
+
+                    style={{
+                        padding: "0.2em 0.8em",
+                        marginLeft: "1em",
+                        border: "1px solid white",
+                    }}
+                >
+                    Clear cart
+                </button> */}
             </div>
             <ul
                 style={{
