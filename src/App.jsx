@@ -146,16 +146,16 @@ function App() {
                     }}
                 >
                     <a
-                        href={`https://horiishichimeien.com/en/cart/${txt}`}
+                        href={cart+txt}
                         style={{ color: "white" }}
                     >
-                        {`https://horiishichimeien.com/en/cart/${txt}`}
+                        {cart+txt}
                     </a>
                 </div>
                 <button
                     onClick={() => {
                         navigator.clipboard.writeText(
-                            `https://horiishichimeien.com/en/cart/${txt}`
+                            cart+txt
                         );
                     }}
                     style={{
@@ -188,7 +188,7 @@ function App() {
                             }}
                         >
                             <a
-                                href={`https://horiishichimeien.com/products/${result.handle}`}
+                                href={ippodo+result.handle}
                                 style={{
                                     color: "black",
                                     textDecoration: "underline",
@@ -226,3 +226,5 @@ function App() {
         </div>
     );
 }
+
+export default App;
