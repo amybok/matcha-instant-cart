@@ -15,9 +15,9 @@ function App() {
     const [txt, setTxt] = useState("");
 
 
-    // useEffect(() => {
-    // 	setCart(cartItem)
-    // }, [txt])
+    useEffect(() => {
+        getData();
+    }, [])
 
     const mockData = [
         {
@@ -51,9 +51,12 @@ function App() {
 
 	}
 
-	const handleSearch = async (event) => {
+    const selectStore = () => {
+        event.preventDefault()
+    }
+
+	const getData = async () => {
 		
-		event.preventDefault()
 		//const url = `https://horiishichimeien.com/en/collections/抹茶/products.json`;
 		const url = `https://global.ippodo-tea.co.jp/collections/matcha/products.json`;
 		try {
@@ -110,28 +113,17 @@ function App() {
 
     return (
         <div>
-            <form onSubmit={handleSearch}>
-                <h1 style={{}}>Grab ur matcha!</h1>
-                <input
-                    style={{
-                        backgroundColor: "rgb(255,255,255, 0.87)",
-                        borderRadius: "0.5em",
-                        padding: "0.2em 1.2em",
-                    }}
-                    type="text"
-                    onChange={(event) => setSearch(event.target.value)}
-                />
-                <button
-                    type="submit"
-                    style={{
-                        padding: "0.2em 0.8em",
-                        marginLeft: "1em",
-                        border: "1px solid white",
-                    }}
-                >
-                    Search
-                </button>
+            <h1 style={{}}>Grab ur matcha!</h1>
+
+            <form>
+                <label for="store">Select a store </label>
+                <select name="store" id="store" style={{backgroundColor: "dimgray", marginLeft:"1em", borderRadius:"0.5em"}}>
+                    <option value="ippodo">Ippodo</option>
+                    <option value="horii">Horii Shichimein</option>
+                </select>
+                <input type="submit" value="Choose" style={{marginLeft:"1em", backgroundColor: "rgb(26,26,26)", borderRadius:"0.5em"}}/>
             </form>
+
             <h3>Click your checkout link</h3>
             <div style={{ display: "flex", justifyContent: "center" }}>
                 <div
@@ -217,7 +209,7 @@ function App() {
                                 alt={result.title}
                                 width="50%"
                                 height="50%"
-                                style={{ borderRadius: "2.2em" }}
+                                style={{ borderRadius: "2.2em", backgroundColor: "#f6f6f6"}}
                             />
                         </li>
                     );
