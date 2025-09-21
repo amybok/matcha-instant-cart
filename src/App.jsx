@@ -14,6 +14,7 @@ function App() {
 
     const [txt, setTxt] = useState("");
 
+
     // useEffect(() => {
     // 	setCart(cartItem)
     // }, [txt])
@@ -43,16 +44,24 @@ function App() {
             ],
         },
     ];
+	const cart = "https://global.ippodo-tea.co.jp/cart/"
+	const ippodo = "https://global.ippodo-tea.co.jp/collections/matcha/products/"
 
-    const handleSearch = async (event) => {
-        event.preventDefault();
-        const url = `https://horiishichimeien.com/en/collections/抹茶/products.json`;
-        try {
-            const response = await fetch(url);
+	const style = {
 
-            if (!response.ok) {
-                throw new Error(`Response status: ${response.status}`);
-            }
+	}
+
+	const handleSearch = async (event) => {
+		
+		event.preventDefault()
+		//const url = `https://horiishichimeien.com/en/collections/抹茶/products.json`;
+		const url = `https://global.ippodo-tea.co.jp/collections/matcha/products.json`;
+		try {
+			const response = await fetch(url);
+		
+			if (!response.ok) {
+				throw new Error(`Response status: ${response.status}`);
+			}
 
             const data = await response.json();
 
@@ -74,6 +83,7 @@ function App() {
 
             console.log(result);
 
+
             setResult(result);
             console.log(result);
         } catch (error) {
@@ -81,15 +91,8 @@ function App() {
         }
     };
 
+
     const addToLink = (itemVariant) => {
-        // setCart([...cartItem, { id: nextId++, variant: itemVariant }]);
-
-        // console.log(cartItem);
-
-        // cartItem.map((item) => {
-        // 	setTxt(txt + item.variant + ":1,")
-        // })
-        // console.log(txt)
 
         setCart((prevCart) => {
             const newCart = [
@@ -223,5 +226,3 @@ function App() {
         </div>
     );
 }
-
-export default App;
