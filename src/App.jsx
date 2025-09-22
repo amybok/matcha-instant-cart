@@ -10,6 +10,9 @@ function App() {
 
     const [cartItem, setCart] = useState([]);
 
+    const [store, setStore] = useState([]);
+
+
     let nextId = 0;
 
     const [txt, setTxt] = useState("");
@@ -17,7 +20,7 @@ function App() {
 
     useEffect(() => {
         getData();
-    }, [])
+    }, [store])
 
     const mockData = [
         {
@@ -44,21 +47,28 @@ function App() {
             ],
         },
     ];
-	const cart = "https://global.ippodo-tea.co.jp/cart/"
+	const carts = {
+        ippodo: "https://global.ippodo-tea.co.jp/cart/",
+        horii : "https://horiishichimeien.com/en/cart/"
+    }
+
+    const links = {
+        ippodo: "https://global.ippodo-tea.co.jp/collections/matcha/products.json",
+        horii: "https://horiishichimeien.com/en/collections/抹茶/products.json"
+}
+
 	const ippodo = "https://global.ippodo-tea.co.jp/collections/matcha/products/"
+    const horii = "https://horiishichimeien.com/en/collections/抹茶/products.json"
 
 	const style = {
 
 	}
 
-    const selectStore = () => {
-        event.preventDefault()
-    }
-
 	const getData = async () => {
-		
+		let url = await store.link
 		//const url = `https://horiishichimeien.com/en/collections/抹茶/products.json`;
-		const url = `https://global.ippodo-tea.co.jp/collections/matcha/products.json`;
+		//const url = `https://global.ippodo-tea.co.jp/collections/matcha/products.json`;
+
 		try {
 			const response = await fetch(url);
 		
@@ -111,12 +121,23 @@ function App() {
         });
     };
 
+    const handleStoreSelect = (e) => {
+        e.preventDefault();
+        let storeName = e.target.store.value;
+        let storeCart = carts[storeName]
+        console.log(storeName);
+        let storeLink = links[storeName];
+        setStore({name: storeName, link: storeLink, cart: storeCart});
+        setCart([])
+        setTxt("");
+    }
+
     return (
         <div>
             <h1 style={{}}>Grab ur matcha!</h1>
 
-            <form>
-                <label for="store">Select a store </label>
+            <form onSubmit={handleStoreSelect}>
+                <label htmlFor="store">Select a store </label>
                 <select name="store" id="store" style={{backgroundColor: "dimgray", marginLeft:"1em", borderRadius:"0.5em"}}>
                     <option value="ippodo">Ippodo</option>
                     <option value="horii">Horii Shichimein</option>
@@ -138,16 +159,16 @@ function App() {
                     }}
                 >
                     <a
-                        href={cart+txt}
+                        href={store.cart+txt}
                         style={{ color: "white" }}
                     >
-                        {cart+txt}
+                        {store.cart ? store.cart+txt : "Choose a store"}
                     </a>
                 </div>
                 <button
                     onClick={() => {
                         navigator.clipboard.writeText(
-                            cart+txt
+                            store.cart+txt
                         );
                     }}
                     style={{
