@@ -10,13 +10,17 @@ function App() {
 
     const [cartItem, setCart] = useState([]);
 
+    const [store, setStore] = useState([]);
+
+
     let nextId = 0;
 
     const [txt, setTxt] = useState("");
 
-    // useEffect(() => {
-    // 	setCart(cartItem)
-    // }, [txt])
+
+    useEffect(() => {
+        getData();
+    }, [store])
 
     const mockData = [
         {
@@ -43,16 +47,34 @@ function App() {
             ],
         },
     ];
+	const carts = {
+        ippodo: "https://global.ippodo-tea.co.jp/cart/",
+        horii : "https://horiishichimeien.com/en/cart/"
+    }
 
-    const handleSearch = async (event) => {
-        event.preventDefault();
-        const url = `https://horiishichimeien.com/en/collections/抹茶/products.json`;
-        try {
-            const response = await fetch(url);
+    const links = {
+        ippodo: "https://global.ippodo-tea.co.jp/collections/matcha/products.json",
+        horii: "https://horiishichimeien.com/en/collections/抹茶/products.json"
+}
 
-            if (!response.ok) {
-                throw new Error(`Response status: ${response.status}`);
-            }
+	const ippodo = "https://global.ippodo-tea.co.jp/collections/matcha/products/"
+    const horii = "https://horiishichimeien.com/en/collections/抹茶/products.json"
+
+	const style = {
+
+	}
+
+	const getData = async () => {
+		let url = await store.link
+		//const url = `https://horiishichimeien.com/en/collections/抹茶/products.json`;
+		//const url = `https://global.ippodo-tea.co.jp/collections/matcha/products.json`;
+
+		try {
+			const response = await fetch(url);
+		
+			if (!response.ok) {
+				throw new Error(`Response status: ${response.status}`);
+			}
 
             const data = await response.json();
 
@@ -74,6 +96,7 @@ function App() {
 
             console.log(result);
 
+
             setResult(result);
             console.log(result);
         } catch (error) {
@@ -81,15 +104,8 @@ function App() {
         }
     };
 
+
     const addToLink = (itemVariant) => {
-        // setCart([...cartItem, { id: nextId++, variant: itemVariant }]);
-
-        // console.log(cartItem);
-
-        // cartItem.map((item) => {
-        // 	setTxt(txt + item.variant + ":1,")
-        // })
-        // console.log(txt)
 
         setCart((prevCart) => {
             const newCart = [
@@ -105,30 +121,30 @@ function App() {
         });
     };
 
+    const handleStoreSelect = (e) => {
+        e.preventDefault();
+        let storeName = e.target.store.value;
+        let storeCart = carts[storeName]
+        console.log(storeName);
+        let storeLink = links[storeName];
+        setStore({name: storeName, link: storeLink, cart: storeCart});
+        setCart([])
+        setTxt("");
+    }
+
     return (
         <div>
-            <form onSubmit={handleSearch}>
-                <h1 style={{}}>Grab ur matcha!</h1>
-                <input
-                    style={{
-                        backgroundColor: "rgb(255,255,255, 0.87)",
-                        borderRadius: "0.5em",
-                        padding: "0.2em 1.2em",
-                    }}
-                    type="text"
-                    onChange={(event) => setSearch(event.target.value)}
-                />
-                <button
-                    type="submit"
-                    style={{
-                        padding: "0.2em 0.8em",
-                        marginLeft: "1em",
-                        border: "1px solid white",
-                    }}
-                >
-                    Search
-                </button>
+            <h1 style={{}}>Grab ur matcha!</h1>
+
+            <form onSubmit={handleStoreSelect}>
+                <label htmlFor="store">Select a store </label>
+                <select name="store" id="store" style={{backgroundColor: "dimgray", marginLeft:"1em", borderRadius:"0.5em"}}>
+                    <option value="ippodo">Ippodo</option>
+                    <option value="horii">Horii Shichimein</option>
+                </select>
+                <input type="submit" value="Choose" style={{marginLeft:"1em", backgroundColor: "rgb(26,26,26)", borderRadius:"0.5em"}}/>
             </form>
+
             <h3>Click your checkout link</h3>
             <div style={{ display: "flex", justifyContent: "center" }}>
                 <div
@@ -143,16 +159,16 @@ function App() {
                     }}
                 >
                     <a
-                        href={`https://horiishichimeien.com/en/cart/${txt}`}
+                        href={store.cart+txt}
                         style={{ color: "white" }}
                     >
-                        {`https://horiishichimeien.com/en/cart/${txt}`}
+                        {store.cart ? store.cart+txt : "Choose a store"}
                     </a>
                 </div>
                 <button
                     onClick={() => {
                         navigator.clipboard.writeText(
-                            `https://horiishichimeien.com/en/cart/${txt}`
+                            store.cart+txt
                         );
                     }}
                     style={{
@@ -198,7 +214,7 @@ function App() {
                             }}
                         >
                             <a
-                                href={`https://horiishichimeien.com/products/${result.handle}`}
+                                href={ippodo+result.handle}
                                 style={{
                                     color: "black",
                                     textDecoration: "underline",
@@ -227,7 +243,7 @@ function App() {
                                 alt={result.title}
                                 width="50%"
                                 height="50%"
-                                style={{ borderRadius: "2.2em" }}
+                                style={{ borderRadius: "2.2em", backgroundColor: "#f6f6f6"}}
                             />
                         </li>
                     );
