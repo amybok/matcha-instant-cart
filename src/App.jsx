@@ -92,6 +92,7 @@ function App() {
                     variant_id: item.variants[0].id,
                     price: item.variants[0].price,
                     image: item.images[0].src,
+                    availability: item.variants[0].available
                 };
             });
 
@@ -211,18 +212,27 @@ function App() {
                                 <h3>{result.title}</h3>
                             </a>
                             <div style={{display:"flex", justifyContent:"center"}}>
+                                
                                 <div
                                     style={{
-                                        border: "solid 1px grey",
+                                        border: "1px solid rgba(255, 255, 255, 0.3)",
                                         borderRadius: "5px",
                                         paddingLeft: "5px",
                                         paddingRight: "5px",
-                                        backgroundColor: "dimgrey",
+                                        backgroundColor:"rgba(255, 255, 255, 0.46)",
                                         width: "fit-content",
                                         marginTop: "-0.35em",
                                     }}
                                 >
-                                    Available
+                                    {result.availability ? 
+                                        <div style={{color:"green"}}>
+                                        In stock
+                                        </div>
+                                    
+                                    : 
+                                        <div style={{color:"red"}}>
+                                            Sold out
+                                        </div>}
                                 </div>
                             </div>
                             <p>
