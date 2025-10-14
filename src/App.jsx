@@ -56,9 +56,10 @@ function App() {
         ippodo: "https://global.ippodo-tea.co.jp/collections/matcha/products.json",
         horii: "https://horiishichimeien.com/en/collections/抹茶/products.json"
 }
-
-	const ippodo = "https://global.ippodo-tea.co.jp/collections/matcha/products/"
-    const horii = "https://horiishichimeien.com/en/collections/抹茶/products.json"
+    const items = {
+        ippodo: "https://global.ippodo-tea.co.jp/collections/matcha/products",
+        horii: "https://horiishichimeien.com/en/collections/抹茶/products"
+    }
 
 	const style = {
 
@@ -91,6 +92,7 @@ function App() {
                     variant_id: item.variants[0].id,
                     price: item.variants[0].price,
                     image: item.images[0].src,
+                    availability: item.variants[0].available
                 };
             });
 
@@ -214,7 +216,7 @@ function App() {
                             }}
                         >
                             <a
-                                href={ippodo+result.handle}
+                                href={items[store.name]+"/"+result.handle}
                                 style={{
                                     color: "black",
                                     textDecoration: "underline",
@@ -222,6 +224,30 @@ function App() {
                             >
                                 <h3>{result.title}</h3>
                             </a>
+                            <div style={{display:"flex", justifyContent:"center"}}>
+                                
+                                <div
+                                    style={{
+                                        border: "1px solid rgba(255, 255, 255, 0.3)",
+                                        borderRadius: "5px",
+                                        paddingLeft: "5px",
+                                        paddingRight: "5px",
+                                        backgroundColor:"rgba(255, 255, 255, 0.46)",
+                                        width: "fit-content",
+                                        marginTop: "-0.35em",
+                                    }}
+                                >
+                                    {result.availability ? 
+                                        <div style={{color:"green"}}>
+                                        In stock
+                                        </div>
+                                    
+                                    : 
+                                        <div style={{color:"red"}}>
+                                            Sold out
+                                        </div>}
+                                </div>
+                            </div>
                             <p>
                                 Variant ID: {result.variant_id}
                                 <button
@@ -242,8 +268,7 @@ function App() {
                                 src={result.image}
                                 alt={result.title}
                                 width="50%"
-                                height="50%"
-                                style={{ borderRadius: "2.2em", backgroundColor: "#f6f6f6"}}
+                                style={{ borderRadius: "2.2em", backgroundColor: "#f6f6f6", aspectRatio: "1:1"}}
                             />
                         </li>
                     );
