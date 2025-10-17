@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import reactLogo from "./assets/react.svg";
 import viteLogo from "/vite.svg";
 import "./App.css";
+import { Analytics } from '@vercel/analytics/react';
 
 function App() {
     const [search, setSearch] = useState("");
@@ -49,16 +50,19 @@ function App() {
     ];
 	const carts = {
         ippodo: "https://global.ippodo-tea.co.jp/cart/",
-        horii : "https://horiishichimeien.com/en/cart/"
+        horii : "https://horiishichimeien.com/en/cart/",
+        naoki: "https://naokimatcha.com/cart/"
     }
 
     const links = {
         ippodo: "https://global.ippodo-tea.co.jp/collections/matcha/products.json",
-        horii: "https://horiishichimeien.com/en/collections/抹茶/products.json"
+        horii: "https://horiishichimeien.com/en/collections/抹茶/products.json",
+        naoki: "https://naokimatcha.com/products.json"
 }
     const items = {
         ippodo: "https://global.ippodo-tea.co.jp/collections/matcha/products",
-        horii: "https://horiishichimeien.com/en/collections/抹茶/products"
+        horii: "https://horiishichimeien.com/en/collections/抹茶/products",
+        naoki: "https://naokimatcha.com/products"
     }
 
 	const style = {
@@ -143,6 +147,7 @@ function App() {
                 <select name="store" id="store" style={{backgroundColor: "dimgray", marginLeft:"1em", borderRadius:"0.5em"}}>
                     <option value="ippodo">Ippodo</option>
                     <option value="horii">Horii Shichimein</option>
+                    <option value="naoki">Naoki</option>
                 </select>
                 <input type="submit" value="Choose" style={{marginLeft:"1em", backgroundColor: "rgb(26,26,26)", borderRadius:"0.5em"}}/>
             </form>
@@ -274,6 +279,7 @@ function App() {
                     );
                 })}
             </ul>
+            <Analytics />
         </div>
     );
 }
